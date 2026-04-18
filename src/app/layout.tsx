@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://numonics.com"),
+  metadataBase: new URL("https://numonics.hiphop"),
   title: "Numonics | Producer. Composer. Creator.",
   description:
     "Numonics is a multi-platinum hip-hop producer, composer, and creative based in Dallas, TX. Beats, licensing, and custom production for artists and sync. Credits include Marlon Craft, Mo3, ¡Mayday!, Black Rob, A24, HBO, NBC, TNT, and The Olympics.",
