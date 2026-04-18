@@ -1,35 +1,36 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Volume2, VolumeX, Play } from "lucide-react";
+import { Volume2, VolumeX } from "lucide-react";
 import { usePlayer } from "@/context/PlayerContext";
 
 const VIDEO_ID = "Te_UA6Zvi4c";
-const THUMBNAIL = `https://img.youtube.com/vi/${VIDEO_ID}/maxresdefault.jpg`;
-const SRC_MUTED   = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${VIDEO_ID}&enablejsapi=1&iv_load_policy=3&disablekb=1`;
-const SRC_UNMUTED = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=0&controls=0&modestbranding=1&rel=0&loop=1&playlist=${VIDEO_ID}&enablejsapi=1&iv_load_policy=3&disablekb=1`;
+
+// autoplay + muted (required by browsers) + no controls + no branding + loop + JS API enabled
+const SRC = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&loop=1&playlist=${VIDEO_ID}&enablejsapi=1&iv_load_policy=3&disablekb=1`;
+
+function postYT(iframe: HTMLIFrameElement, func: string) {
+  iframe.contentWindow?.postMessage(
+    JSON.stringify({ event: "command", func, args: [] }),
+    "https://www.youtube.com"
+  );
+}
 
 export default function LatestRelease() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const [active, setActive] = useState(false);
   const [muted, setMuted] = useState(true);
   const { isPlaying, togglePlay } = usePlayer();
-
-  function handlePlay() {
-    setActive(true);
-    // Pause the media player when user initiates video playback
-    if (isPlaying) togglePlay();
-  }
 
   function handleMuteToggle() {
     const iframe = iframeRef.current;
     if (!iframe) return;
+
     if (muted) {
-      // Swap src to unmuted version — most reliable cross-browser approach
-      iframe.src = SRC_UNMUTED;
+      postYT(iframe, "unMute");
+      // Pause the media player so audio doesn't overlap
       if (isPlaying) togglePlay();
     } else {
-      iframe.src = SRC_MUTED;
+      postYT(iframe, "mute");
     }
     setMuted((m) => !m);
   }
@@ -57,49 +58,25 @@ export default function LatestRelease() {
       {/* Video embed */}
       <div className="relative z-10 max-w-3xl mx-auto w-full">
         <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+          <iframe
+            ref={iframeRef}
+            className="absolute inset-0 w-full h-full"
+            src={SRC}
+            title="Marlon Craft - If I Loved Me"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
 
-          {!active ? (
-            /* Facade: thumbnail + play button, no iframe until user clicks */
-            <button
-              onClick={handlePlay}
-              aria-label="Play video"
-              className="absolute inset-0 w-full h-full group cursor-pointer"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={THUMBNAIL}
-                alt="If I Loved Me — Marlon Craft"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 md:w-20 md:h-20 bg-primary flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <Play size={28} fill="currentColor" className="text-on-primary ml-1" />
-                </div>
-              </div>
-            </button>
-          ) : (
-            /* Live iframe — only mounted after user clicks */
-            <>
-              <iframe
-                ref={iframeRef}
-                className="absolute inset-0 w-full h-full"
-                src={SRC_MUTED}
-                title="Marlon Craft - If I Loved Me"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-              <button
-                onClick={handleMuteToggle}
-                aria-label={muted ? "Unmute video" : "Mute video"}
-                className="absolute bottom-4 right-4 z-10 w-11 h-11 bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary hover:text-on-primary transition-colors cursor-pointer"
-              >
-                {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-              </button>
-            </>
-          )}
+          {/* Mute / unmute button */}
+          <button
+            onClick={handleMuteToggle}
+            aria-label={muted ? "Unmute video" : "Mute video"}
+            className="absolute bottom-4 right-4 z-10 w-11 h-11 bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white hover:bg-primary hover:border-primary hover:text-on-primary transition-colors cursor-pointer"
+          >
+            {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
+          </button>
         </div>
       </div>
 
