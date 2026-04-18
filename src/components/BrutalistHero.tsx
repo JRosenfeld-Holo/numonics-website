@@ -48,7 +48,9 @@ export default function BrutalistHero() {
       {/* Text content */}
       <div className="relative z-10 w-full md:w-1/2 px-6 py-12 md:p-12 flex flex-col justify-center items-start gap-4 min-h-[420px] md:min-h-[700px]">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-white/50 font-label">
-          South Florida Made &nbsp;·&nbsp; Dallas, Texas Paid
+          <span className="block md:inline">South Florida Made</span>
+          <span className="hidden md:inline">&nbsp;·&nbsp;</span>
+          <span className="block md:inline">Dallas, Texas Paid</span>
         </p>
         <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-black leading-[0.85] tracking-tighter text-[#ff0099] uppercase font-headline">
           Numonics
@@ -122,10 +124,10 @@ export default function BrutalistHero() {
           />
         </div>
 
-        {/* Albums Sold counter */}
+        {/* Records Sold counter */}
         <div ref={counterRef} className="absolute bottom-4 left-4 md:bottom-6 md:left-6 bg-primary text-on-primary p-4 md:p-8 w-[160px] md:w-[280px]" style={{ zIndex: 3 }}>
           <span className="block text-xs font-bold uppercase tracking-[0.2em] mb-2 font-label">
-            Albums Sold
+            Records Sold
           </span>
           <h2 className="text-2xl md:text-5xl font-black tracking-tighter font-headline tabular-nums">
             {count.toLocaleString()}+

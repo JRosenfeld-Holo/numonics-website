@@ -16,10 +16,10 @@ export default function Discography() {
   return (
     <section id="beats" className="bg-surface-container-low py-16 md:py-32 px-6 md:px-12 relative brutalist-grid">
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 md:mb-20 gap-4 md:gap-8">
-        <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase text-stroke-primary">
+        <h2 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase text-stroke-primary text-left">
           Nu Beats
         </h2>
-        <span className="text-on-surface-variant font-medium tracking-widest text-sm uppercase">
+        <span className="hidden md:block text-on-surface-variant font-medium tracking-widest text-sm uppercase">
           [ {TRACKS.length.toString().padStart(2, "0")} TOTAL RELEASES ]
         </span>
       </div>

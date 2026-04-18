@@ -19,22 +19,19 @@ export default function LatestRelease() {
         </p>
       </div>
 
-      {/* Video embed */}
-      <div className="relative z-10 max-w-3xl mx-auto w-full">
+      {/* Video embed — iframe is shifted up 52px to clip the YouTube title bar,
+          overflow-hidden on the wrapper keeps the visible area a clean 16:9 */}
+      <div className="relative z-10 max-w-3xl mx-auto w-full overflow-hidden">
         <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
           <iframe
-            className="absolute inset-0 w-full h-full"
+            className="absolute left-0 w-full"
+            style={{ top: "-52px", height: "calc(100% + 52px)" }}
             src="https://www.youtube.com/embed/Te_UA6Zvi4c?si=X85LPwhDDcUXh6z8&modestbranding=1&rel=0&showinfo=0"
             title="Marlon Craft - If I Loved Me (Live with Band)"
             frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
-          />
-          {/* Cover YouTube title bar at top */}
-          <div
-            className="absolute top-0 left-0 right-0 pointer-events-none"
-            style={{ height: "52px", background: "var(--color-surface)" }}
           />
         </div>
       </div>
