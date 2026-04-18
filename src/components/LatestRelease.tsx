@@ -12,11 +12,12 @@ const SRC_UNMUTED = `https://www.youtube.com/embed/${VIDEO_ID}?autoplay=1&mute=0
 export default function LatestRelease() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [active, setActive] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const { isPlaying, togglePlay } = usePlayer();
 
   function handlePlay() {
     setActive(true);
+    setMuted(false);
     // Pause the media player when user initiates video playback
     if (isPlaying) togglePlay();
   }
@@ -84,7 +85,7 @@ export default function LatestRelease() {
               <iframe
                 ref={iframeRef}
                 className="absolute inset-0 w-full h-full"
-                src={SRC_MUTED}
+                src={SRC_UNMUTED}
                 title="Marlon Craft - If I Loved Me"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
