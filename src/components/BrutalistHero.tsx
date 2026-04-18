@@ -47,7 +47,7 @@ export default function BrutalistHero() {
 
       {/* Text content */}
       <div className="relative z-10 w-full md:w-1/2 px-6 py-12 md:p-12 flex flex-col justify-center items-start gap-4 min-h-[420px] md:min-h-[700px]">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-white/50 font-label">
+        <p className="hidden md:block text-xs font-bold uppercase tracking-[0.3em] text-white/50 font-label">
           <span className="block md:inline">South Florida Made</span>
           <span className="hidden md:inline">&nbsp;·&nbsp;</span>
           <span className="block md:inline">Dallas, Texas Paid</span>
